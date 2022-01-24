@@ -1,0 +1,19 @@
+{
+  "name": "chatroom",
+  "version": "1.0.0",
+  "description": "Simple chatroom",
+  "main": "src/server/main.js",
+  "scripts": {
+    "start": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "nodemon src/server/main.js"
+  },
+  "author": "Jake Tyerman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "socket.io": "^4.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
