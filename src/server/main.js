@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 })
 
 app.use(express.static(path.join(__dirname, '../client')));
-app.use('/rooms', require('./routes/rooms'));
+app.use('/rooms', require('./routes/api/rooms'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -29,4 +29,4 @@ io.on('connection', (socket) => {
 
 server.listen(PORT, () => {
     console.log(`server started on port ${PORT}`);
-})
+});
