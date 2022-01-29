@@ -9,7 +9,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    const room = rooms_list.find(element => element.id == req.params.id)
+    const room = rooms_list.find(element => element.id == req.params.id);
     res.json({name: room.name, id: room.id, messages: room.messages.toArray()});
+});
+
+router.post('/', (req, res) => {
+    console.log(req.body.name);
+    res.send(req.body);
 });
 module.exports = router;
