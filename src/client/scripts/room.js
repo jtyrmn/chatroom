@@ -1,3 +1,17 @@
+const socket = io();
+
+socket.on('connect', () => {
+    console.log('connected to server');
+})
+
+socket.on('disconnect', () => {
+    console.log('disconnected from server');
+})
+
+socket.on('receive_message', (msg) => {
+    console.log(`received message [${msg}]`);
+});
+
 function display_room(id) {
     http = new XMLHttpRequest();
     http.onload = function(){
@@ -11,3 +25,29 @@ function display_room(id) {
     http.open('GET', '/rooms/' + id);
     http.send();
 }
+
+function join_room(id) {
+    socket.emit('join_room', id);
+    display_room(id);
+}
+
+function display_room_list() {
+    rooms = null;
+    http = new XMLHttpRequest();
+    http.onload = function(){
+        room_list = JSON.parse(this.responseText);
+        text = '<table>';
+        for (room of room_list){
+            text += `<tr><td>${room.name}</td><td>${room.id}</td><td><button onclick="join_room('${room.id}')">join</button></td></tr>`;
+        }
+        document.getElementById('room_list').innerHTML = text + '</table>';
+    }
+    http.open('GET', '/rooms');
+    http.send();
+}
+
+function send_message(msg) {
+    socket.emit('send_message', msg);
+}
+
+display_room_list();

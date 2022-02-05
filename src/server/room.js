@@ -8,8 +8,6 @@ class Room{
         this.id = nanoid(6);
         this.messages = new linked_list.create();
     }
-
-    
 }
 
 const rooms_list = [new Room('a name'), new Room('another name')];
