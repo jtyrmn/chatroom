@@ -3,14 +3,14 @@ const Message = require('./message')
 const {nanoid} = require('nanoid')
 
 class Room{
-    constructor(name, id){
+    constructor(name){
         this.name = name;
         this.id = nanoid(6);
         this.messages = new linked_list.create();
     }
 }
 
-const rooms_list = [new Room('a name'), new Room('another name')];
+const rooms_list = [new Room('main_room'), new Room('unrelated_room')];
 rooms_list[1].messages.push(new Message("hello this is first message"));
 rooms_list[1].messages.push(new Message("hello this is second message"));
 

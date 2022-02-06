@@ -11,7 +11,11 @@
         </h1>
 
         <div id="room_list" class = "split left">left side</div>
-        <div id="room_chat" class = "split right">right side</div>
+        <div id="room_chat_div" class = "split right">
+            <p id="room_chat">chat goes here</p>
+            <textarea id = "message_box"></textarea>
+            <button onclick="send_message(document.getElementById('message_box').value);">Send message</button>
+        </div>
     </body>
 
     <script src = "scripts/room.js"></script>

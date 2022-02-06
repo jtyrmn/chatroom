@@ -1,4 +1,5 @@
 const socket = io();
+current_room = NaN;
 
 socket.on('connect', () => {
     console.log('connected to server');
@@ -10,6 +11,7 @@ socket.on('disconnect', () => {
 
 socket.on('receive_message', (msg) => {
     console.log(`received message [${msg}]`);
+    display_room(current_room);
 });
 
 function display_room(id) {
@@ -27,6 +29,7 @@ function display_room(id) {
 }
 
 function join_room(id) {
+    current_room = id;
     socket.emit('join_room', id);
     display_room(id);
 }
@@ -47,7 +50,11 @@ function display_room_list() {
 }
 
 function send_message(msg) {
-    socket.emit('send_message', msg);
+    if(current_room != NaN){
+        console.log('sneding message...');
+        socket.emit('send_message', msg, current_room);
+        display_room(current_room);
+    }
 }
 
 display_room_list();

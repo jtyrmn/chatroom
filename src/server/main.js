@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const Message = require('./message');
+const rooms_list = require('./room');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -21,16 +23,17 @@ app.use(express.urlencoded({extended: false}));
 
 io.on('connection', (socket) => {
     console.log(`${socket.id} connected to server`);
-
-    socket.on('send_message', (msg) => {
-        console.log(`${socket.id}: ${msg}`)
-        console.log(`relaying message to these rooms: ${Array.from(socket.rooms)}`);
-        socket.to(Array.from(socket.rooms)).emit('receive_message', msg);
-        //io.emit('receive_message', msg);
-    })
-
+    
     socket.on('disconnect', () => {
         console.log(`${socket.id} disconnected from server`);
+    });
+
+    socket.on('send_message', (msg, room_id) => {
+        console.log(`${socket.id}: ${msg}`);
+
+        let room = rooms_list.find(r => r.id == room_id);
+        room.messages.push(new Message(msg));
+        socket.to(Array.from(socket.rooms)).emit('receive_message', msg);
     });
 
     socket.on('join_room', (id) => {
